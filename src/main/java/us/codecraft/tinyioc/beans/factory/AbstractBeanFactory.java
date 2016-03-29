@@ -81,7 +81,12 @@ public abstract class AbstractBeanFactory implements BeanFactory {
 	public List getBeansForType(Class type) throws Exception {
 		List beans = new ArrayList<Object>();
 		for (String beanDefinitionName : beanDefinitionNames) {
+            //type 是 BeanPostProcessor.class
+            //判断这个类是否是实现了BeanPostProcessor接口的
+            //这里AspectJAwareAdvisorAutoProxyCreator是实现了BeanPostProcessor接口的
+            //说明其是切面编程的代理
 			if (type.isAssignableFrom(beanDefinitionMap.get(beanDefinitionName).getBeanClass())) {
+                //这里的getBean()生成一个实例
 				beans.add(getBean(beanDefinitionName));
 			}
 		}
